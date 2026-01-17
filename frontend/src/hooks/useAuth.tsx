@@ -40,7 +40,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/api/auth/signin`, {
+      // Use relative URL for Vercel compatibility
+      const apiUrl = typeof window !== 'undefined'
+        ? '/api/auth/signin'
+        : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/auth/signin`;
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +75,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signUp = async (email: string, username: string, password: string) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/api/auth/signup`, {
+      // Use relative URL for Vercel compatibility
+      const apiUrl = typeof window !== 'undefined'
+        ? '/api/auth/signup'
+        : `${process.env.NEXT_PUBLIC_API_URL || ''}/api/auth/signup`;
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,9 @@
 import { Todo, TodoCreate, TodoUpdate } from '../types/todo';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+// Use relative URLs for Vercel deployment compatibility
+const API_BASE_URL = typeof window === 'undefined'
+  ? (process.env.NEXT_PUBLIC_API_URL || '')
+  : '';
 
 class ApiService {
   private token: string | null = null;
