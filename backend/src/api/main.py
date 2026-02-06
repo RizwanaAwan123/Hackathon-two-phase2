@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from .auth_routes import router as auth_router
 from .todo_routes import router as todo_router
+from .chat_routes import router as chat_router  # Import the chat router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -19,8 +20,9 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(auth_router, prefix="/api/auth", tags=["authentication"])
-app.include_router(todo_router, prefix="/api/todos", tags=["todos"])
+app.include_router(auth_router, prefix="/api", tags=["authentication"])
+app.include_router(todo_router, prefix="/api", tags=["todos"])
+app.include_router(chat_router, prefix="/api", tags=["chat"])  # Include the chat router
 
 @app.get("/")
 def read_root():

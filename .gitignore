@@ -60,15 +60,15 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.staging.local
-.env.build
+# # dotenv environment variables file
+# .env
+# .env.test
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+# .env.staging.local
+# .env.build
 
 # Next.js build output
 .next/
@@ -148,6 +148,7 @@ frontend/public/dist/
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
+todo.db
 
 # IDE
 .vscode/
@@ -161,3 +162,6 @@ frontend/public/dist/
 *.temp
 .DS_Store
 Thumbs.db
+
+# Windows special files
+nul
