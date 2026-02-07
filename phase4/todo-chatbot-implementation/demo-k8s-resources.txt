@@ -1,0 +1,153 @@
+## Kubernetes Resources for Todo Chatbot Application
+
+This demonstrates what the Kubernetes resources would look like after deployment:
+
+### 1. Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend-backend-chart
+  labels:
+    app.kubernetes.io/name: backend-chart
+    app.kubernetes.io/instance: todo-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backend-chart
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: backend-chart
+    spec:
+      containers:
+      - name: backend-chart
+        image: todo-backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+
+### 2. Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-backend-backend-chart
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: backend-chart
+
+### 3. Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-frontend-frontend-chart
+  labels:
+    app.kubernetes.io/name: frontend-chart
+    app.kubernetes.io/instance: todo-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend-chart
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frontend-chart
+    spec:
+      containers:
+      - name: frontend-chart
+        image: todo-frontend:latest
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 50m
+            memory: 64Mi
+
+### 4. Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-frontend-frontend-chart
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app.kubernetes.io/name: frontend-chart
+
+### 5. Expected Deployment Commands
+# To deploy the application:
+minikube start --cpus=2 --memory=4096
+eval $(minikube docker-env)
+docker build -t todo-frontend:latest ./frontend
+docker build -t todo-backend:latest ./backend
+helm install todo-backend ./helm/backend-chart
+helm install todo-frontend ./helm/frontend-chart
+
+### 6. Expected Verification Commands
+# To check if resources are deployed:
+kubectl get pods
+kubectl get services
+kubectl get deployments
+
+# To access the application:
+minikube service todo-frontend-frontend-chart --url
+
+### 7. Sample Output After Deployment
+NAME                                           READY   STATUS    RESTARTS   AGE
+pod/todo-backend-backend-chart-7d5b8c9c-w2x4v   1/1     Running   0          2m
+pod/todo-frontend-frontend-chart-9f3a2d8e-z5y7   1/1     Running   0          2m
+
+NAME                                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/todo-backend-backend-chart     ClusterIP   10.96.123.45    <none>        8080/TCP   2m
+service/todo-frontend-frontend-chart   ClusterIP   10.96.67.89     <none>        80/TCP     2m
+
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/todo-backend-backend-chart   1/1     1            1           2m
+deployment.apps/todo-frontend-frontend-chart 1/1     1            1           2m

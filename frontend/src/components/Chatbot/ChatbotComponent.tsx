@@ -158,8 +158,8 @@ const ChatbotComponent: React.FC<ChatbotComponentProps> = ({ onTasksChange, toke
             Send
           </button>
         </div>
-        <div className="mt-2 text-xs text-gray-500">
-          Examples: "Add a task to buy groceries", "Show my tasks", "Mark task 1 as complete", "Delete task 2"
+        <div className="mt-2 text-xs text-gray-500 text-center">
+          Commands: add [task], show todos, complete [num], delete [num], help
         </div>
       </div>
     </div>

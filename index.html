@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Application Phases Navigation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .phase-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .phase-title {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+        }
+        
+        .phase-description {
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        
+        .phase-link {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+        
+        .phase-link:hover {
+            background: #2980b9;
+        }
+        
+        .chatbot-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+            background: #2980b9;
+        }
+        
+        .chatbot-icon img {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .chatbot-popup {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+        }
+        
+        .chatbot-header {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+        
+        .chatbot-body {
+            padding: 15px;
+        }
+        
+        .phase-selector {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        
+        .go-button {
+            width: 100%;
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .go-button:hover {
+            background: #2980b9;
+        }
+        
+        .status-bar {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background: #eafaf1;
+            border-radius: 5px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo Application Phases</h1>
+    <div class="subtitle">Navigate between different phases of the Todo application</div>
+    
+    <div class="container">
+        <div class="phase-card">
+            <h3 class="phase-title">Phase 2 - Todo Application</h3>
+            <p class="phase-description">Main todo application with user authentication, signup/signin, and task management features.</p>
+            <a href="http://localhost:3000" target="_blank" class="phase-link">Open Phase 2</a>
+        </div>
+        
+        <div class="phase-card">
+            <h3 class="phase-title">Phase 3 - AI Chatbot Integration</h3>
+            <p class="phase-description">Enhanced todo application with AI chatbot functionality for natural language task management.</p>
+            <a href="http://localhost:3001" target="_blank" class="phase-link">Open Phase 3</a>
+        </div>
+        
+        <div class="phase-card">
+            <h3 class="phase-title">Phase 4 - Advanced Chatbot</h3>
+            <p class="phase-description">Professional-grade todo chatbot with advanced NLP capabilities and command processing.</p>
+            <a href="http://localhost:3002" target="_blank" class="phase-link">Open Phase 4</a>
+        </div>
+    </div>
+    
+    <div class="status-bar">
+        <strong>Status:</strong> All phases are running - Phase 2 (Port 3000), Phase 3 (Port 3001), Phase 4 (Port 3002)
+    </div>
+    
+    <!-- Chatbot Icon -->
+    <div class="chatbot-icon" id="chatbotIcon" onclick="toggleChatbot()">
+        <span style="font-size: 24px; color: white;">💬</span>
+    </div>
+    
+    <!-- Chatbot Popup -->
+    <div class="chatbot-popup" id="chatbotPopup">
+        <div class="chatbot-header">Navigation Assistant</div>
+        <div class="chatbot-body">
+            <p>Hello! I'm your navigation assistant. Select a phase to visit:</p>
+            <select class="phase-selector" id="phaseSelector">
+                <option value="">Select a phase...</option>
+                <option value="http://localhost:3000">Phase 2 - Main Todo App</option>
+                <option value="http://localhost:3001">Phase 3 - AI Chatbot</option>
+                <option value="http://localhost:3002">Phase 4 - Advanced Chatbot</option>
+            </select>
+            <button class="go-button" onclick="goToPhase()">Go to Phase</button>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #7f8c8d;">
+                Or ask me: "Take me to phase 2" or "Show me the AI chatbot"
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleChatbot() {
+            const popup = document.getElementById('chatbotPopup');
+            if (popup.style.display === 'block') {
+                popup.style.display = 'none';
+            } else {
+                popup.style.display = 'block';
+            }
+        }
+        
+        function goToPhase() {
+            const selector = document.getElementById('phaseSelector');
+            const selectedValue = selector.value;
+            
+            if (selectedValue) {
+                window.open(selectedValue, '_blank');
+            } else {
+                alert('Please select a phase first!');
+            }
+        }
+        
+        // Close popup when clicking outside
+        window.onclick = function(event) {
+            const popup = document.getElementById('chatbotPopup');
+            const icon = document.getElementById('chatbotIcon');
+            
+            if (event.target !== icon && event.target !== popup && !popup.contains(event.target)) {
+                popup.style.display = 'none';
+            }
+        }
+        
+        // Simple command processing
+        document.addEventListener('keypress', function(event) {
+            if (event.key === '`') { // Using backtick as shortcut to open chatbot
+                toggleChatbot();
+            }
+        });
+    </script>
+</body>
+</html>

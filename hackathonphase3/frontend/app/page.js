@@ -18,7 +18,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const response = await axios.post(`http://localhost:8000/api/1/chat`, {
+      const response = await axios.post(`http://localhost:8001/api/1/chat`, {
         message: input,
         conversation_id: conversationId
       });
@@ -74,7 +74,7 @@ export default function Home() {
             </div>
           )}
         </div>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <input
             type="text"
             value={input}
@@ -84,18 +84,22 @@ export default function Home() {
             style={{
               flex: 1,
               padding: '0.5rem 1rem',
-              borderRadius: '0.5rem 0 0 0.5rem',
+              borderRadius: '0.5rem',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              color: 'white'
+              color: 'white',
+              marginBottom: '0.5rem'
             }}
           />
+          <div style={{ fontSize: '0.75rem', color: '#9ca3af', textAlign: 'center', marginBottom: '0.5rem' }}>
+            Commands: add [task], show todos, complete [num], delete [num], help
+          </div>
           <button
             onClick={sendMessage}
             disabled={loading}
             style={{
               padding: '0.5rem 1rem',
-              borderRadius: '0 0.5rem 0.5rem 0',
+              borderRadius: '0.5rem',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               backgroundColor: '#a855f7',
               color: 'white',
